@@ -13,7 +13,11 @@ public class UserRegistrationDto {
     private UserInfo.UserType userType;
 
     // Default constructor
-    public UserRegistrationDto() {
+    public UserRegistrationDto(String username, String password, String email, UserInfo.UserType userType) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.userType = userType;
     }
 
     // Getters and Setters

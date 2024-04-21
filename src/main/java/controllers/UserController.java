@@ -1,10 +1,12 @@
 package controllers;
 
+import DTO.UserLoginDto;
 import DTO.UserRegistrationDto;
 import model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 import services.UserService;
 
@@ -19,6 +21,16 @@ public class UserController {
     public ResponseEntity<UserInfo> registerUser(@RequestBody UserRegistrationDto registrationDto) {
         UserInfo user = userService.createUser(registrationDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody UserLoginDto loginDto) {
+        try {
+            String jwt = userService.login(loginDto);
+            return ResponseEntity.ok(jwt);
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
 }
