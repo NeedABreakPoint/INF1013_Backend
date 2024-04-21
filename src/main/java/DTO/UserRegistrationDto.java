@@ -1,32 +1,22 @@
-package model;
+package DTO;
 
-import jakarta.persistence.*;
 
-//import javax.persistence.*;
+import model.UserInfo;
 
-@Entity
-@Table(name = "users")
-public class UserInfo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    public enum UserType {
-        CUSTOMER, RESTAURANT_OWNER
-    }
+public class UserRegistrationDto {
+
     private String username;
     private String password;
+
     private String email;
-    @Enumerated(EnumType.STRING)
-    private UserType userType;  // 'user' for normal users, 'owner' for restaurant owners
 
-    public Long getId() {
-        return id;
+    private UserInfo.UserType userType;
+
+    // Default constructor
+    public UserRegistrationDto() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    // Getters and Setters
     public String getUsername() {
         return username;
     }
@@ -51,11 +41,13 @@ public class UserInfo {
         this.email = email;
     }
 
-    public UserType getUserType() {
+    public UserInfo.UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(UserType userType) {
+    public void setUserType(UserInfo.UserType userType) {
         this.userType = userType;
     }
 }
+
+

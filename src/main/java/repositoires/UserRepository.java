@@ -1,4 +1,10 @@
 package repositoires;
+import model.UserInfo;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public class UserRepository {
+
+public interface UserRepository extends JpaRepository<UserInfo, Long> {
+
+    UserInfo findByUsername(String username);
+    UserInfo findByEmail(String email);
 }
