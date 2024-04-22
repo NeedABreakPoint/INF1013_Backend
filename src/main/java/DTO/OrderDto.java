@@ -1,4 +1,4 @@
-package dto;
+package DTO;
 
 import model.OrderInfo;
 import java.time.LocalDateTime;

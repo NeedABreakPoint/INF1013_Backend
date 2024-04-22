@@ -1,6 +1,6 @@
 package controllers;
 
-import DTO.UserLoginDto;
+import DTO.AuthDto;
 import DTO.UserRegistrationDto;
 import model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody UserLoginDto loginDto) {
+    public ResponseEntity<?> loginUser(@RequestBody AuthDto loginDto) {
         try {
             String jwt = userService.login(loginDto);
             return ResponseEntity.ok(jwt);

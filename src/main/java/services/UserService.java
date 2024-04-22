@@ -1,6 +1,6 @@
 package services;
 
-import DTO.UserLoginDto;
+import DTO.AuthDto;
 import DTO.UserRegistrationDto;
 import model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +24,8 @@ public class UserService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtUtil jwtUtil;
+//    @Autowired
+//    private JwtUtil jwtUtil;
 
     @Transactional
     public UserInfo createUser(UserRegistrationDto registrationDto) {
@@ -36,11 +36,13 @@ public class UserService {
         newUser.setUserType(registrationDto.getUserType());
         return userRepository.save(newUser);
     }
-    public String login(UserLoginDto loginDto) throws AuthenticationException {
+
+    public String login(AuthDto loginDto) throws AuthenticationException {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword())
         );
-        return jwtUtil.generateToken(authentication.getName());
+//        return jwtUtil.generateToken(authentication.getName());
+        return "";
     }
 }
 

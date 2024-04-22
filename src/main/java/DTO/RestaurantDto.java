@@ -1,6 +1,4 @@
-package dto;
-
-
+package DTO;
 
 import model.RestaurantInfo;
 
