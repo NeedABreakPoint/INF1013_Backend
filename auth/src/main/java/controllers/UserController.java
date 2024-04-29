@@ -20,6 +20,4 @@ public class UserController {
         UserInfo user = userService.createUser(registrationDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
-
-
 }

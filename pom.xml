@@ -11,9 +11,14 @@
 	<groupId>INF1013</groupId>
 	<artifactId>my_restaurant</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>backend</name>
+    <packaging>pom</packaging>
+    <name>backend</name>
 	<description>Project for INF1013</description>
-	<properties>
+    <modules>
+        <module>business</module>
+		<module>auth</module>
+	</modules>
+    <properties>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
