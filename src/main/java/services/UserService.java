@@ -1,7 +1,7 @@
 package services;
 
-import DTO.AuthDto;
-import DTO.UserRegistrationDto;
+import dto.AuthDto;
+import dto.UserRegistrationDto;
 import model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
