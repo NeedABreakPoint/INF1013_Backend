@@ -1,7 +1,7 @@
 package controllers;
 
-import dto.AuthDto;
-import dto.UserDetailsDto;
+import DTO.AuthDto;
+import DTO.UserDetailsDto;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

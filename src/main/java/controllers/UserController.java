@@ -1,12 +1,10 @@
 package controllers;
 
-import dto.AuthDto;
-import dto.UserRegistrationDto;
+import DTO.UserRegistrationDto;
 import model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 import services.UserService;
 
