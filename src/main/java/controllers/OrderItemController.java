@@ -1,7 +1,7 @@
 package controllers;
 
 
-import dto.OrderItemDto;
+import DTO.OrderItemDto;
 import model.OrderItemInfo;
 import services.OrderItemService;
 import org.springframework.beans.factory.annotation.Autowired;

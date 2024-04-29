@@ -23,14 +23,5 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody AuthDto loginDto) {
-        try {
-            String jwt = userService.login(loginDto);
-            return ResponseEntity.ok(jwt);
-        } catch (AuthenticationException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-    }
 
 }

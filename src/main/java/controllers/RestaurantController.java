@@ -1,7 +1,7 @@
 package controllers;
 
 
-import dto.RestaurantDto;
+import DTO.RestaurantDto;
 import model.RestaurantInfo;
 import services.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;

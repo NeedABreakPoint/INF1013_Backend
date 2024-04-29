@@ -37,13 +37,6 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    public String login(AuthDto loginDto) throws AuthenticationException {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword())
-        );
-//        return jwtUtil.generateToken(authentication.getName());
-        return "";
-    }
 }
 
 

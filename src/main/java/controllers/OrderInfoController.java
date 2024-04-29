@@ -1,6 +1,6 @@
 package controllers;
 
-import dto.OrderDto;
+import DTO.OrderDto;
 import model.OrderInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

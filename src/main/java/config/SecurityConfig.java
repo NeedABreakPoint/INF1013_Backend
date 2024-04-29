@@ -1,4 +1,6 @@
 package config;
+import config.beans.JwtConfigBean;
+import config.jwt.JwtAuthenticationEntryPoint;
 import config.jwt.JwtAuthorizationFilter;
 import config.jwt.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,11 +13,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
     private PasswordEncoder passwordEncoder;
+    private JwtConfigBean configBean;
+    private JwtAuthenticationEntryPoint jwtEntryPoint;
     public SecurityConfig(@Qualifier("authenticator") UserDetailsService userDetailsService,
                           PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
@@ -25,11 +30,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .cors().and()
-                .addFilterAfter(new JwtTokenFilter(), JwtUsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new JwtAuthorizationFilter(configBean, userDetailsService), JwtAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/register", "api/users/register")
                 .permitAll()

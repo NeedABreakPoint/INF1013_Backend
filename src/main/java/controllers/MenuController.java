@@ -1,6 +1,6 @@
 package controllers;
 
-import dto.MenuDto;
+import DTO.MenuDto;
 import model.MenuInfo;
 import services.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;

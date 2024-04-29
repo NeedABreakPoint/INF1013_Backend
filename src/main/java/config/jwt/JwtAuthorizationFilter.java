@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
@@ -36,15 +36,27 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
+    private String extractJwtToken(HttpServletRequest request) {
+        String headerAuth = request.getHeader(configBean.getTokenHeader());
+        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(configBean.getTokenPrefix())) {
+            return headerAuth.replace(configBean.getTokenPrefix(), "").trim();
+        }
+        return null;
+    }
 
+    public DecodedJWT decodeJwtToken(String token) {
+        Algorithm algorithm = Algorithm.
+                HMAC256(configBean.getSecret());
+        JWTVerifier verifier = JWT.require(algorithm)
+                .withIssuer(configBean.getTokenIssuer())
+                .build();
+        return verifier.verify(token);
+    }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("Step1");
-        String jwt = extractJwtToken(request);
+        String jwt = extractJwtToken((HttpServletRequest) request);
         if(jwt != null) {
             DecodedJWT decoded = decodeJwtToken(jwt);
             if (decoded != null) {
@@ -62,23 +74,5 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         }
         log.info("Step2");
         filterChain.doFilter(request, response);
-    }
-
-
-    private String extractJwtToken(HttpServletRequest request) {
-        String headerAuth = request.getHeader(configBean.getTokenHeader());
-        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith(configBean.getTokenPrefix())) {
-            return headerAuth.replace(configBean.getTokenPrefix(), "").trim();
-        }
-        return null;
-    }
-
-    public DecodedJWT decodeJwtToken(String token) {
-        Algorithm algorithm = Algorithm.
-                HMAC256(configBean.getSecret());
-        JWTVerifier verifier = JWT.require(algorithm)
-                .withIssuer(configBean.getTokenIssuer())
-                .build();
-        return verifier.verify(token);
     }
 }
