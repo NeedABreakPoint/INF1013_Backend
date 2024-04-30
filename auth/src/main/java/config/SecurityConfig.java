@@ -24,9 +24,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtConfigBean configBean;
     private JwtAuthenticationEntryPoint jwtEntryPoint;
     public SecurityConfig(@Qualifier("authenticator") UserDetailsService userDetailsService,
-                          PasswordEncoder passwordEncoder) {
+                          PasswordEncoder passwordEncoder,
+                          JwtConfigBean configBean,
+                          JwtAuthenticationEntryPoint jwtEntryPoint) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
+        this.configBean = configBean;
+        this.jwtEntryPoint = jwtEntryPoint;
     }
 
     @Override
@@ -41,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterAfter(new JwtAuthorizationFilter(configBean, userDetailsService), JwtAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/api/users/add")
+                .antMatchers(HttpMethod.POST,"/api/users/add")
                 .permitAll()
                 .anyRequest().authenticated();
     }
