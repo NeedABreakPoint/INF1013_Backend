@@ -56,6 +56,13 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("Step1");
         String jwt = extractJwtToken((HttpServletRequest) request);
+
+        if ("/api/users/add".equals(request.getRequestURI())) {
+            System.out.println("Request URI: " + request.getRequestURI());
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         if(jwt != null) {
             DecodedJWT decoded = decodeJwtToken(jwt);
             if (decoded != null) {

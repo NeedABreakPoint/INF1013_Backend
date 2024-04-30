@@ -15,9 +15,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/register")
+    @PostMapping("/add")
     public ResponseEntity<UserInfo> registerUser(@RequestBody UserRegistrationDto registrationDto) {
         UserInfo user = userService.createUser(registrationDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 }

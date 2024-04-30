@@ -4,10 +4,16 @@ import DTO.UserRegistrationDto;
 import model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repositories.UserRepository;
+
+import exception.UserIdNotFoundException;
+
+import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -17,11 +23,9 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Autowired
     private AuthenticationManager authenticationManager;
-
-//    @Autowired
-//    private JwtUtil jwtUtil;
 
     @Transactional
     public UserInfo createUser(UserRegistrationDto registrationDto) {
@@ -31,6 +35,27 @@ public class UserService {
         newUser.setEmail(registrationDto.getEmail());
         newUser.setUserType(registrationDto.getUserType());
         return userRepository.save(newUser);
+    }
+
+    public List<UserInfo> findAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public UserInfo updateUser(UserInfo userInfo) {
+        return userRepository.save(userInfo);
+    }
+
+    public void deleteUser(Long userId) {
+        userRepository.deleteUserById(userId);
+    }
+
+    public UserInfo findById(Long id) throws UserIdNotFoundException {
+        return userRepository.findUserById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+    }
+
+    public UserInfo findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
 }
